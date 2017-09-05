@@ -22,7 +22,7 @@ RUN docker-php-ext-install gd
 
 # Install pecl modules
 RUN pecl install memcached \
-    xdebug-2.5.0 \
+    xdebug-2.5.0 && \
     imagick-3.4.3 && \
     docker-php-ext-enable memcached \
     xdebug \
