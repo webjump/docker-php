@@ -5,9 +5,9 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
     libmcrypt-dev libxslt-dev libicu-dev libmemcached-dev zlib1g-dev \
-    libmagickwand-dev libmagickcore-dev nodejs npm git
+    libmagickwand-dev libmagickcore-dev nodejs nodejs-legacy npm git
 
-# Install PHP extensions
+# Installing Magento PHP extensions requirements
 RUN docker-php-ext-install bcmath \
     mcrypt \
     pdo_mysql \
@@ -16,17 +16,20 @@ RUN docker-php-ext-install bcmath \
     zip \
     opcache
 
-# Install GD
+# Installing GD alone because it needs some configurations
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 RUN docker-php-ext-install gd
 
-# Install pecl modules
+# Installing pecl PHP modules
 RUN pecl install memcached \
     xdebug-2.5.0 \
     imagick-3.4.3 && \
     docker-php-ext-enable memcached \
     xdebug \
     imagick
+
+#Installing Grunt
+RUN npm install -g grunt-cli
 
 # Clear cache
 RUN apt-get clean && \
