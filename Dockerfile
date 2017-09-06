@@ -5,7 +5,11 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
     libmcrypt-dev libxslt-dev libicu-dev libmemcached-dev zlib1g-dev \
-    libmagickwand-dev libmagickcore-dev nodejs nodejs-legacy npm git
+    libmagickwand-dev libmagickcore-dev git
+
+# Installing NodeJS from external resource
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+    apt-get install -y nodejs
 
 # Installing Magento PHP extensions requirements
 RUN docker-php-ext-install bcmath \
