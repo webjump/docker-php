@@ -1,4 +1,4 @@
-FROM php:7.0.23-fpm
+FROM php:7.0.24-fpm
 
 # Updating and installing some dependences
 RUN apt-get update && \
