@@ -1,11 +1,11 @@
-FROM php:7.0.23-fpm
+FROM php:7.0.24-fpm
 
 # Updating and installing some dependences
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
     libmcrypt-dev libxslt-dev libicu-dev libmemcached-dev zlib1g-dev \
-    libmagickwand-dev libmagickcore-dev git
+    libmagickwand-dev libmagickcore-dev git php-soap
 
 # Installing NodeJS from external resource
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
@@ -18,6 +18,7 @@ RUN docker-php-ext-install bcmath \
     xsl \
     intl \
     zip \
+    soap \
     opcache
 
 # Installing GD alone because it needs some configurations
