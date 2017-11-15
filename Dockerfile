@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
     libmcrypt-dev libxslt-dev libicu-dev libmemcached-dev zlib1g-dev \
-    libmagickwand-dev libmagickcore-dev git php-soap
+    libmagickwand-dev libmagickcore-dev git php-soap wget python3-dev libffi-dev libssl-dev
 
 # Installing NodeJS from external resource
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
@@ -50,3 +50,18 @@ RUN groupmod -g 1000 www-data
 # Set www-data as owner for /var/www
 RUN chown -R www-data:www-data /var/www/ && \
     chmod -R g+w /var/www/
+
+RUN echo 'root:root' | chpasswd
+RUN echo 'www-data:www-data' | chpasswd
+
+# Python installation
+RUN wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz
+RUN tar xJf Python-3.6.3.tar.xz
+RUN cd Python-3.6.3 && \
+    ./configure && \
+    make && \
+    make install
+
+RUN pip3.6 install virtualenv
+RUN virtualenv /opt/.virtualenvs/magento
+RUN chown -R www-data:www-data /opt/.virtualenvs/magento
