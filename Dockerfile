@@ -50,18 +50,3 @@ RUN groupmod -g 1000 www-data
 # Set www-data as owner for /var/www
 RUN chown -R www-data:www-data /var/www/ && \
     chmod -R g+w /var/www/
-
-RUN echo 'root:root' | chpasswd
-RUN echo 'www-data:www-data' | chpasswd
-
-# Python installation
-RUN wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz
-RUN tar xJf Python-3.6.3.tar.xz
-RUN cd Python-3.6.3 && \
-    ./configure && \
-    make && \
-    make install
-
-RUN pip3.6 install virtualenv
-RUN virtualenv /opt/.virtualenvs/magento
-RUN chown -R www-data:www-data /opt/.virtualenvs/magento
